@@ -1,10 +1,9 @@
 name: Deploy to GitHub Pages
-
 on:
   push:
-    branches: [main] # 只在 main 分支推送时部署
+    branches: [main]
 
-# 权限：允许写 Pages
+# 关键：给 Pages 部署权限
 permissions:
   contents: read
   pages: write
@@ -13,7 +12,7 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: github-pages # 内置环境，不用自己配密钥
+    environment: github-pages
     steps:
       - uses: actions/checkout@v4
 
@@ -29,7 +28,7 @@ jobs:
       - name: 上传构建产物
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist/ # 你的打包目录
+          path: dist/
 
       - name: 部署到 Pages
         uses: actions/deploy-pages@v4
