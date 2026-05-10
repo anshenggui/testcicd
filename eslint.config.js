@@ -16,6 +16,7 @@ export default [
       globals: {
         ...globals.browser,
         ...globals.es2020,
+        process: 'readonly',
       },
       parserOptions: {
         ecmaVersion: 'latest',
