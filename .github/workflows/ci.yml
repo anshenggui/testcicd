@@ -1,0 +1,33 @@
+name: Frontend CI（检查+构建）
+
+# 触发时机：push 到 main、提 PR 到 main
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest # 用 Linux 虚拟机（免费）
+    steps:
+      - name: 拉取代码
+        uses: actions/checkout@v4
+
+      - name: 安装 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20 # 用 Node 20
+          cache: 'npm' # 缓存依赖，下次更快
+
+      - name: 安装依赖
+        run: npm ci # 比 npm install 更严格、更快
+
+      - name: 代码检查（ESLint）
+        run: npm run lint --if-present
+
+      - name: 单元测试
+        run: npm test --if-present
+
+      - name: 构建项目
+        run: npm run build
